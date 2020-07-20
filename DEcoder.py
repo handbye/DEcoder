@@ -160,7 +160,7 @@ unicode_output.place(x=500, y=310, anchor='nw')
 
 def unicode_encode():
     result = unicode_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
-    result = ''.join([hex(ord(i)) for i in result.strip()])
+    result = ''.join([hex(ord(i)) for i in result])
     unicode_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     unicode_output.insert('end', result)
 
@@ -193,7 +193,7 @@ asc_output.place(x=500, y=410, anchor='nw')
 
 def asc_encode():
     result = asc_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
-    result = ' '.join([str(ord(i)) for i in result.strip()])
+    result = ' '.join([str(ord(i)) for i in result])
     asc_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     asc_output.insert('end', result)
 
