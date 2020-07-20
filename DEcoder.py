@@ -114,7 +114,7 @@ def url_all_encode():
 
 def url_key_encode():
     result = url_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
-    result = requote_uri(result.strip())
+    result = requote_uri(result)
     url_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     url_output.insert('end', result.strip())
 
@@ -123,7 +123,7 @@ def url_decode():
     result = url_output.get("0.0", "end")  # 从0行0列获取输入值直到结束
     result = unquote(result.strip())
     url_input.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    url_input.insert('end', result.strip())
+    url_input.insert('end', result)
 
 
 def url_select_encode():
