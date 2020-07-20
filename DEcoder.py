@@ -27,10 +27,10 @@ b64_output.place(x=500, y=40, anchor='nw')
 
 # base64编码函数
 def b64_encode():
-    result = b64_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = b64_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = b64encode(result.encode(var_base_type.get()))
     b64_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    b64_output.insert('end', result.strip())
+    b64_output.insert('end', result)
 
 
 # base64解码函数
@@ -39,15 +39,15 @@ def b64_decode():
     result = b64decode(result.strip())
     result = result.decode(var_base_type.get())
     b64_input.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    b64_input.insert('end', result.strip())
+    b64_input.insert('end', result)
 
 
 # base32编码函数
 def b32_encode():
-    result = b64_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = b64_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = b32encode(result.encode(var_base_type.get()))
     b64_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    b64_output.insert('end', result.strip())
+    b64_output.insert('end', result)
 
 
 # base32解码函数
@@ -56,7 +56,7 @@ def b32_decode():
     result = b32decode(result.strip())
     result = result.decode(var_base_type.get())
     b64_input.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    b64_input.insert('end', result.strip())
+    b64_input.insert('end', result)
 
 
 def base_select_encode():
@@ -106,17 +106,17 @@ url_output.place(x=500, y=190, anchor='nw')
 
 
 def url_all_encode():
-    result = url_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = url_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = quote(result)
     url_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    url_output.insert('end', result.rstrip()[:-3])
+    url_output.insert('end', result)
 
 
 def url_key_encode():
-    result = url_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = url_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = requote_uri(result)
     url_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    url_output.insert('end', result.strip()[:-3])
+    url_output.insert('end', result)
 
 
 def url_decode():
@@ -159,10 +159,10 @@ unicode_output.place(x=500, y=310, anchor='nw')
 
 
 def unicode_encode():
-    result = unicode_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = unicode_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = ''.join([hex(ord(i)) for i in result.strip()])
     unicode_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    unicode_output.insert('end', result.strip())
+    unicode_output.insert('end', result)
 
 
 def unicoce_decode():
@@ -171,7 +171,7 @@ def unicoce_decode():
     result.remove('')
     result = ''.join([chr(int(i, 16)) for i in result])
     unicode_input.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    unicode_input.insert('end', result.strip())
+    unicode_input.insert('end', result)
 
 
 d1 = tk.Button(window, text='str to hex -->', width=10, height=0, command=unicode_encode)
@@ -192,7 +192,7 @@ asc_output.place(x=500, y=410, anchor='nw')
 
 
 def asc_encode():
-    result = asc_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = asc_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = ' '.join([str(ord(i)) for i in result.strip()])
     asc_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     asc_output.insert('end', result)
@@ -267,14 +267,14 @@ md5_type2.place(x=400, y=510, anchor='nw')
 
 
 def md5_32():
-    result = md5_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = md5_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = md5(result.encode('utf-8')).hexdigest()
     md5_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     md5_output.insert('end', result.strip())
 
 
 def md5_16():
-    result = md5_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
+    result = md5_input.get("0.0", "end")[:-1]  # 从0行0列获取输入值直到结束
     result = md5(result.encode('utf-8')).hexdigest()[8:-8]
     md5_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     md5_output.insert('end', result.strip())
