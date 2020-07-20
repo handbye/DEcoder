@@ -103,21 +103,20 @@ url_input.place(x=10, y=190, anchor='nw')
 # 右侧输入输出框
 url_output = tk.Text(window, height=6, width=40)
 url_output.place(x=500, y=190, anchor='nw')
-url_output.insert('end', '请去除转换后字符串末尾的最后一个%OA')
 
 
 def url_all_encode():
     result = url_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
     result = quote(result)
     url_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    url_output.insert('end', result.rstrip())
+    url_output.insert('end', result.rstrip()[:-3])
 
 
 def url_key_encode():
     result = url_input.get("0.0", "end")  # 从0行0列获取输入值直到结束
     result = requote_uri(result)
     url_output.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
-    url_output.insert('end', result.strip())
+    url_output.insert('end', result.strip()[:-3])
 
 
 def url_decode():
