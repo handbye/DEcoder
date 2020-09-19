@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import tkinter as tk
+import tkinter as ttk
 import tkinter.messagebox
 from tkinter.filedialog import askopenfilenames
 from base64 import b64encode, b64decode, b32encode, b32decode
@@ -9,19 +9,19 @@ from requests.utils import requote_uri
 from hashlib import md5
 from pathlib import Path
 
-window = tk.Tk()
+window = ttk.Tk()
 window.title('DEcoder')
 window.geometry('800x650')
 
 # Base64/32编码解码
 # 窗体名称
-b64Text = tk.Label(window, text='Base64/32编码解码:', font=('微软雅黑', 16))
+b64Text = ttk.Label(window, text='Base64/32编码解码:', font=('微软雅黑', 16))
 b64Text.place(x=10, y=10, anchor='nw')
 # 左侧输入输出框
-b64_input = tk.Text(window, height=8, width=40)
+b64_input = ttk.Text(window, height=8, width=40)
 b64_input.place(x=10, y=40, anchor='nw')
 # 右侧输入输出框
-b64_output = tk.Text(window, height=8, width=40)
+b64_output = ttk.Text(window, height=8, width=40)
 b64_output.place(x=500, y=40, anchor='nw')
 
 
@@ -68,40 +68,46 @@ def base_select_encode():
 
 def base_select_decode():
     if var_base_num.get() == "base32":
-        return b32_decode()
+        try:
+            return b32_decode()
+        except:
+            tkinter.messagebox.showerror(title='错误', message='解码错误,请检查输入')
     if var_base_num.get() == "base64":
-        return b64_decode()
+        try:
+            return b64_decode()
+        except:
+            tkinter.messagebox.showerror(title='错误', message='解码错误,请检查输入')
 
 
 # 选择按钮
-var_base_num = tk.StringVar(None, 'base64')  # 设置默认值为base64
-base_num1 = tk.Radiobutton(window, text='base32', variable=var_base_num, value='base32')
+var_base_num = ttk.StringVar(None, 'base64')  # 设置默认值为base64
+base_num1 = ttk.Radiobutton(window, text='base32', variable=var_base_num, value='base32')
 base_num1.place(x=310, y=65, anchor='nw')
-base_num2 = tk.Radiobutton(window, text='base64', variable=var_base_num, value='base64')
+base_num2 = ttk.Radiobutton(window, text='base64', variable=var_base_num, value='base64')
 base_num2.place(x=410, y=65, anchor='nw')
 
 # 选择按钮
-var_base_type = tk.StringVar(None, 'utf-8')  # 设置默认值为utf-8
-base_type1 = tk.Radiobutton(window, text='gbk', variable=var_base_type, value='gbk')
+var_base_type = ttk.StringVar(None, 'utf-8')  # 设置默认值为utf-8
+base_type1 = ttk.Radiobutton(window, text='gbk', variable=var_base_type, value='gbk')
 base_type1.place(x=310, y=40, anchor='nw')
-base_type2 = tk.Radiobutton(window, text='utf-8', variable=var_base_type, value='utf-8')
+base_type2 = ttk.Radiobutton(window, text='utf-8', variable=var_base_type, value='utf-8')
 base_type2.place(x=410, y=40, anchor='nw')
 
 # 编码解码按钮
-b1 = tk.Button(window, text='编码 -->', width=10, height=1, command=base_select_encode)
-b2 = tk.Button(window, text='<-- 解码', width=10, height=1, command=base_select_decode)
+b1 = ttk.Button(window, text='编码 -->', width=10, height=1, command=base_select_encode)
+b2 = ttk.Button(window, text='<-- 解码', width=10, height=1, command=base_select_decode)
 b1.place(x=335, y=95, anchor='nw')
 b2.place(x=335, y=120, anchor='nw')
 
 # URL编码解码
 # 窗体名称
-urlText = tk.Label(window, text='URL编码解码:', font=('微软雅黑', 16))
+urlText = ttk.Label(window, text='URL编码解码:', font=('微软雅黑', 16))
 urlText.place(x=10, y=160, anchor='nw')
 # 左侧输入输出框
-url_input = tk.Text(window, height=6, width=40)
+url_input = ttk.Text(window, height=6, width=40)
 url_input.place(x=10, y=190, anchor='nw')
 # 右侧输入输出框
-url_output = tk.Text(window, height=6, width=40)
+url_output = ttk.Text(window, height=6, width=40)
 url_output.place(x=500, y=190, anchor='nw')
 
 
@@ -121,7 +127,10 @@ def url_key_encode():
 
 def url_decode():
     result = url_output.get("0.0", "end")  # 从0行0列获取输入值直到结束
-    result = unquote(result.strip())
+    try:
+        result = unquote(result.strip())
+    except:
+        tkinter.messagebox.showerror(title='错误', message='解码错误,请检查输入')
     url_input.delete("0.0", "end")  # 每次输出结果前先清空文本框内的内容
     url_input.insert('end', result)
 
@@ -134,27 +143,27 @@ def url_select_encode():
 
 
 # 选择按钮
-var_url_type = tk.StringVar(None, 'key')  # 设置默认值为全编码
-url_type1 = tk.Radiobutton(window, text='全编码', variable=var_url_type, value='all')
+var_url_type = ttk.StringVar(None, 'key')  # 设置默认值为全编码
+url_type1 = ttk.Radiobutton(window, text='全编码', variable=var_url_type, value='all')
 url_type1.place(x=310, y=190, anchor='nw')
-url_type2 = tk.Radiobutton(window, text='关键词编码', variable=var_url_type, value='key')
+url_type2 = ttk.Radiobutton(window, text='关键词编码', variable=var_url_type, value='key')
 url_type2.place(x=400, y=190, anchor='nw')
 
 # 编码解码按钮
-c1 = tk.Button(window, text='编码 -->', width=10, height=1, command=url_select_encode)
-c2 = tk.Button(window, text='< --解码', width=10, height=1, command=url_decode)
+c1 = ttk.Button(window, text='编码 -->', width=10, height=1, command=url_select_encode)
+c2 = ttk.Button(window, text='< --解码', width=10, height=1, command=url_decode)
 c1.place(x=335, y=215, anchor='nw')
 c2.place(x=335, y=240, anchor='nw')
 
 # 字符串与HEX互转
 # 窗体名称
-unicodeText = tk.Label(window, text='字符串与hex互转:', font=('微软雅黑', 16))
+unicodeText = ttk.Label(window, text='字符串与hex互转:', font=('微软雅黑', 16))
 unicodeText.place(x=10, y=280, anchor='nw')
 # 左侧输入输出框
-unicode_input = tk.Text(window, height=3.5, width=40)
+unicode_input = ttk.Text(window, height=3.5, width=40)
 unicode_input.place(x=10, y=310, anchor='nw')
 # 右侧输入输出框
-unicode_output = tk.Text(window, height=3.5, width=40)
+unicode_output = ttk.Text(window, height=3.5, width=40)
 unicode_output.place(x=500, y=310, anchor='nw')
 
 
@@ -174,20 +183,20 @@ def unicoce_decode():
     unicode_input.insert('end', result)
 
 
-d1 = tk.Button(window, text='str to hex -->', width=10, height=0, command=unicode_encode)
-d2 = tk.Button(window, text='<-- hex to str', width=10, height=0, command=unicoce_decode)
+d1 = ttk.Button(window, text='str to hex -->', width=10, height=0, command=unicode_encode)
+d2 = ttk.Button(window, text='<-- hex to str', width=10, height=0, command=unicoce_decode)
 d1.place(x=335, y=310, anchor='nw')
 d2.place(x=335, y=340, anchor='nw')
 
 # ASCII与字符串互转
 # 窗体名称
-ascText = tk.Label(window, text='字符串与ASCII互转:', font=('微软雅黑', 16))
+ascText = ttk.Label(window, text='字符串与ASCII互转:', font=('微软雅黑', 16))
 ascText.place(x=10, y=380, anchor='nw')
 # 左侧输入输出框
-asc_input = tk.Text(window, height=3.5, width=40)
+asc_input = ttk.Text(window, height=3.5, width=40)
 asc_input.place(x=10, y=410, anchor='nw')
 # 右侧输入输出框
-asc_output = tk.Text(window, height=3.5, width=40)
+asc_output = ttk.Text(window, height=3.5, width=40)
 asc_output.place(x=500, y=410, anchor='nw')
 
 
@@ -220,18 +229,18 @@ def asc_decode():  # 目前仅支持连续的中文和英文ascii转字符串
     asc_input.insert('end', result_out)
 
 
-e1 = tk.Button(window, text='str to ASCII -->', width=10, height=0, command=asc_encode)
-e2 = tk.Button(window, text='<-- ASCII to str', width=10, height=0, command=asc_decode)
+e1 = ttk.Button(window, text='str to ASCII -->', width=10, height=0, command=asc_encode)
+e2 = ttk.Button(window, text='<-- ASCII to str', width=10, height=0, command=asc_decode)
 e1.place(x=335, y=410, anchor='nw')
 e2.place(x=335, y=440, anchor='nw')
 
 
 # md5加密
 # 窗体名称
-md5Text = tk.Label(window, text='md5 hash 计算:', font=('微软雅黑', 16))
+md5Text = ttk.Label(window, text='md5 hash 计算:', font=('微软雅黑', 16))
 md5Text.place(x=10, y=480, anchor='nw')
 # 左侧输入输出框
-md5_input = tk.Text(window, height=2, width=40)
+md5_input = ttk.Text(window, height=2, width=40)
 md5_input.place(x=10, y=510, anchor='nw')
 
 
@@ -248,21 +257,21 @@ def select_file():
 
 
 # 文件选择框
-md5_text = tk.Text(window, height=4, width=40)
+md5_text = ttk.Text(window, height=4, width=40)
 md5_text.place(x=10, y=560, anchor='nw')
 md5_text.insert('end', '可以选择单个文件或多个文件!')
 # 文件选择按钮
-md5_file_buttom = tk.Button(window, text='选择文件', width=5, height=0, command=select_file)
+md5_file_buttom = ttk.Button(window, text='选择文件', width=5, height=0, command=select_file)
 md5_file_buttom.place(x=300, y=600, anchor='nw')
 # 右侧输出框
-md5_output = tk.Text(window, height=6, width=40)
+md5_output = ttk.Text(window, height=6, width=40)
 md5_output.place(x=500, y=530, anchor='nw')
 
 # 选择按钮
-var_md5_type = tk.StringVar(None, '32')  # 设置默认值为全编码
-md5_type1 = tk.Radiobutton(window, text='md5(16)', variable=var_md5_type, value='16')
+var_md5_type = ttk.StringVar(None, '32')  # 设置默认值为全编码
+md5_type1 = ttk.Radiobutton(window, text='md5(16)', variable=var_md5_type, value='16')
 md5_type1.place(x=310, y=510, anchor='nw')
-md5_type2 = tk.Radiobutton(window, text='md5(32)', variable=var_md5_type, value='32')
+md5_type2 = ttk.Radiobutton(window, text='md5(32)', variable=var_md5_type, value='32')
 md5_type2.place(x=400, y=510, anchor='nw')
 
 
@@ -323,9 +332,9 @@ def md5_select_file():
         return md5_file_32()
 
 
-f1 = tk.Button(window, text='文本hash -->', width=10, height=0, command=md5_select)
+f1 = ttk.Button(window, text='文本hash -->', width=10, height=0, command=md5_select)
 f1.place(x=335, y=540, anchor='nw')
-f2 = tk.Button(window, text='文件hash -->', width=10, height=0, command=md5_select_file)
+f2 = ttk.Button(window, text='文件hash -->', width=10, height=0, command=md5_select_file)
 f2.place(x=335, y=570, anchor='nw')
 
 # 主窗口循环显示
