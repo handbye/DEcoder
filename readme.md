@@ -9,5 +9,3 @@
 由于pyinstaller的原因打包出来的文件有点大，大概22M，不想打包的同学可以直接使用`python3 DEcoder.py`运行程序即可。
 
 打包后的文件放在了**release**中，目前仅打包了mac下使用的`.app`文件，需要的可直接下载，其它平台的可使用pyinstaller打包。
-
-有问题或需求请提issue或者发邮件给我：`hand01@qq.com`
